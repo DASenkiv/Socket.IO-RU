@@ -194,7 +194,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 server.listen(80);
-// WARNING: app.listen(80) will NOT work here!
+// ВНИМАНИЕ: app.listen(80) здесь не будет работать!
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
@@ -228,18 +228,18 @@ Socket.IO позволяет отправлять и получать польз
 ### Сервер
 
 ```js
-// note, io(<port>) will create a http server for you
+// note, io(<port>) создаст http сервер
 var io = require('socket.io')(80);
 
 io.on('connection', function (socket) {
-  io.emit('this', { will: 'be received by everyone'});
+  io.emit('this', { will: 'будет принято всеми'});
 
   socket.on('private message', function (from, msg) {
-    console.log('I received a private message by ', from, ' saying ', msg);
+    console.log('Я получил личное сообщение от ', from, ' который сказал ', msg);
   });
 
   socket.on('disconnect', function () {
-    io.emit('user disconnected');
+    io.emit('Пользователь отсоединился');
   });
 });
 ```
@@ -342,7 +342,7 @@ io.on('connection', function (socket) {
   var socket = io(); // СОВЕТ: io() без аргументов производит автообнаружение
   socket.on('connect', function () { // СОВЕТ: вы можете избежать прослушивания через `connect` и прослушивать события напрямую!
     socket.emit('ferret', 'tobi', 'woot', function (data) { // аргументы отправляются для подтверждения функции
-      console.log(data); // данные 'tobi says woot'
+      console.log(data); // 'tobi says woot'
     });
   });
 </script>
