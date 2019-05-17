@@ -20,7 +20,7 @@ This is russian translation of official documentation socket.io (https://socket.
 
  - [Обзор](#Обзор)
 	 - [Что такое SocketIO](#Обзор)
-	 - Чем SocketIO не является
+	 - [Чем SocketIO не является](#Чем-SocketIO-не-является)
 	 - Установка
 	 - Использование с http-сервером Node
 	 - Использование с Express
@@ -89,4 +89,11 @@ io.on('connection', function(socket){
   socket.on('reply', function(){ /* */ }); // слушать событие
 });
 ```
+## Чем SocketIO не является
 
+SocketIO **НЕ** является реализацией WebSocket. Хотя SocketIO действительно использует WebSocket в качестве протокола передачи данных, когда это возможно, он добавляет некоторые метаданные к каждому пакету: тип пакета, пространство имен и идентификатор ACK, когда требуется подтверждение сообщения. Вот почему клиент WebSocket не сможет успешно подключиться к серверу SocketIO, а клиент SocketIO также не сможет подключиться к серверу WebSocket. 
+
+```js
+// ВНИМАНИЕ: клиент НЕ сможет подключиться!
+const client = io ('ws: //echo.websocket.org');
+```
