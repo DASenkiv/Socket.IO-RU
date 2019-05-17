@@ -1,5 +1,7 @@
-# Socket.IO-Documentation
-This is russian translation of official documentation socket.io (https://socket.io/docs/).
+# Документация библиотеки Socket.IO на русском языке
+[ENG]:This is russian translation of official documentation socket.io (https://socket.io/docs/).
+
+[RU]: Перевод документации socket.io на русский язык (https://socket.io/docs/).
 
 От переводчика: 
 
