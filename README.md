@@ -49,7 +49,12 @@
  - [Логирование и отладка](#Логирование-и-отладка)
     - [Доступные области отладки](#Доступные-области-отладки)
  - [Шпаргалка по Emit](#Шпаргалка-по-Emit)
- - Обзор фреймворка изнутри
+ - [Обзор фреймворка изнутри](#Обзор-фреймворка-изнутри)
+    - [Граф зависимостей](#Граф-зависимостей)
+        - [engine.io-parser](#engine.io-parser)
+        - [engine.io](#engine.io)
+        - [engine.io-client](#engine.io-client)
+        - [socket.io-adapter](#socket.io-adapter)
  - Часто задаваемые вопросы
 # Обзор
 SocketIO - это библиотека, которая обеспечивает двустороннюю и основанную на событиях связь в режиме реального времени между браузером и сервером. Она состоит из:
@@ -623,3 +628,54 @@ function onConnect(socket){
 - `removeListener`
 - `ping`
 - `pong`
+
+# Обзор фреймворка изнутри
+
+## Граф зависимостей
+
+Кодовая база SocketIO разделена на несколько репозиториев:
+
+- https://github.com/socketio/socket.io
+- https://github.com/socketio/socket.io-client
+- https://github.com/socketio/socket.io-parser
+- https://github.com/socketio/socket.io-adapter
+- https://github.com/socketio/socket.io-redis
+- https://github.com/socketio/engine.io
+- https://github.com/socketio/engine.io-client
+- https://github.com/socketio/engine.io-parser
+
+Следующая диаграмма отображает отношения между каждым проектом:
+
+<img src="/images/dependencies.jpg" alt="Socket.IO dependency graph">
+
+Каждый проект имеет свой набор функций:
+
+### engine.io-parser
+
+Это синтаксический анализатор (parser) JavaScript для кодировки протокола engine.io, совместно используемый [engine.io-client](https://github.com/socketio/engine.io-client) и [engine.io](https://github.com/socketio/engine.io).
+
+Спецификацию протокола можно найти [здесь](https://github.com/socketio/engine.io-protocol).
+
+### engine.io
+ 
+EngineIO - это кроссплатформенная и кроссбраузерная реализация двунаправленного коммуникационного уровня на основе транспортного уровня для SocketIO.
+
+Его главная особенность - возможность менять протокол на лету. Соединение (инициированное копией [engine.io-client](https://github.com/socketio/engine.io-client)) начинает с XHR polling, а потом переключает на WebSocket, если это возможно.
+
+Он использует [engine.io-parser](https://github.com/socketio/engine.io-parser) для кодирования/декодирования пакетов.
+
+### engine.io-client
+
+Это клиент для [Engine.IO](https://github.com/socketio/engine.io), кроссплатформенная и кроссбраузерная реализация двунаправленного коммуникационного уровня на основе транспортного уровня для [Socket.IO](https://github.com/socketio/socket.io).
+
+Работает как в браузере (включая HTML5 [WebWorker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)) и в Node.js.
+
+Он использует [engine.io-parser](https://github.com/socketio/engine.io-parser) для кодирования/декодирования пакетов.
+
+### socket.io-adapter
+
+Это класс-адаптер Socket.IO in-memory.
+
+***Вычисления in-memory*** - вычисления, которые сохраняют данные в оперативной памяти на многих подключенных устройствах и обрабатывают их параллельно, что значительно повышает скорость обработки
+
+Этот модуль не предназначен для использования конечным пользователем, но может использоваться как интерфейс для наследования от других адаптеров, которые вы, возможно, захотите построить, например, [socket.io-redis](https://github.com/socketio/socket.io-redis).
