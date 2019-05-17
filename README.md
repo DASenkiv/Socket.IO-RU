@@ -19,7 +19,7 @@ This is russian translation of official documentation socket.io (https://socket.
 # Содержание
 
  - [Обзор](#Обзор)
-	 - Что такое SocketIO
+	 - Что такое SocketIO(#Обзор)
 	 - Чем SocketIO не является
 	 - Установка
 	 - Использование с http-сервером Node
