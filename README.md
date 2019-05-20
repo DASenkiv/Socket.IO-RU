@@ -679,3 +679,42 @@ EngineIO - это кроссплатформенная и кроссбраузе
 ***Вычисления in-memory*** - вычисления, которые сохраняют данные в оперативной памяти на многих подключенных устройствах и обрабатывают их параллельно, что значительно повышает скорость обработки
 
 Этот модуль не предназначен для использования конечным пользователем, но может использоваться как интерфейс для наследования от других адаптеров, которые вы, возможно, захотите построить, например, [socket.io-redis](https://github.com/socketio/socket.io-redis).
+
+## socket.io-redis
+
+Это адаптер, использующий механизм Redis [Pub/Sub](https://redis.io/topics/pubsub) для трансляции сообщений между несколькими узлами.
+
+## socket.io-parser
+
+SocketIO Кодер и декодер, написанный на JavaScript, в соответствии с версией 3 протокола [socket.io-protocol](). Используется в  [socket.io](https://github.com/socketio/socket.io) и [socket.io-client](https://github.com/socketio/socket.io-client).
+
+## socket.io
+
+Socket.IO brings some *syntactic sugar* over the Engine.IO "raw" API. It also brings two new concepts, `Rooms` and `Namespaces`, which introduce a separation of concern between communication channels.
+
+Socket.IO привносит некоторый *синтаксический сахар* через «сырое» API Engine.IO. Это также приносит две новые концепции, «Комнаты» и «Пространства имен», которые вводят разделение проблем между каналами связи.
+
+По умолчанию он предоставляет клиентскую сборку браузера по адресу `/socket.io/socket.io.js`.
+
+Он использует [socket.io-parser](https://github.com/socketio/socket.io-parser) для кодирования и декодирования пакетов.
+
+## socket.io-client
+
+Это клиент для [Socket.IO](https://github.com/socketio/socket.io). Он опирается на [engine.io-client](https://github.com/socketio/engine.io-client), который управляет транспортным своппингом (повышение/понижение протокола) и обнаружением разъединения.
+
+Он обрабатывает переподключение автоматически, в случае разрыва основного соединения.
+
+Он использует [socket.io-parser](https://github.com/socketio/socket.io-parser) для кодирования и декодирования пакетов.
+
+
+# Под капотом
+
+## Соединение
+
+```js
+const client = io('https://myhost.com');
+```
+
+Как это происходит:
+
+- на клиенской стороне создается экземлпляр `engine.io-client`
